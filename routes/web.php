@@ -1,14 +1,14 @@
 <?php
-
+use App\User;
 /*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
+    |--------------------------------------------------------------------------
+    | Application Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can register all of the routes for an application.
+    | It is a breeze. Simply tell Lumen the URIs it should respond to
+    | and give it the Closure to call when that URI is requested.
+    |
 */
 
 $router->get('/', function () use ($router) {
@@ -16,5 +16,13 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('home', function () use ($router) {
-    return "<h1>CI/CD API - Lumen 5.8</h1><p><b>Version: </b> ".$router->app->version()."</p>";
+    return $router->app->make('view')->make('home');
+});
+
+$router->get('profile', function () use ($router) {
+
+    $user = User::all()->first();
+
+    return view('profile')->with('user', $user);
+
 });
